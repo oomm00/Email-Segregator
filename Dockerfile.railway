@@ -12,9 +12,8 @@ RUN apt-get update && \
     libpq-dev gcc && \
     rm -rf /var/lib/apt/lists/*
 
-# install spacy model
-RUN pip install --no-cache-dir "spacy>=3.7,<4" && \
-    python -m spacy download en_core_web_sm --quiet
+# install spacy model (fail gracefully — regex fallback works without it)
+RUN python -m spacy download en_core_web_sm --quiet || true
 
 # copy requirements first for caching
 COPY requirements/railway.txt requirements/railway.txt

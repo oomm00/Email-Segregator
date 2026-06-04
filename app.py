@@ -129,8 +129,8 @@ async def extract(req: ExtractRequest):
         return FieldOut(value=f.value, confidence=f.confidence, method=f.method) if f else None
 
     vessels = [VesselOut(**{k: _to_out(getattr(v, k)) for k in VesselOut.model_fields}) for v in vessels_raw]
-    cargoes = [CargoOut(**{k: _to_out(getattr(c, k)) for c in CargoOut.model_fields}) for c in cargoes_raw]
-    tc_fixtures = [TcOut(**{k: _to_out(getattr(t, k)) for t in TcOut.model_fields}) for t in tc_raw]
+    cargoes = [CargoOut(**{k: _to_out(getattr(c, k)) for k in CargoOut.model_fields}) for c in cargoes_raw]
+    tc_fixtures = [TcOut(**{k: _to_out(getattr(t, k)) for k in TcOut.model_fields}) for t in tc_raw]
 
     matches = []
     if req.run_matching:

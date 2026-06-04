@@ -13,7 +13,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # install spacy model
-RUN pip install --no-cache-dir spacy>=3.7,<4 && \
+RUN pip install --no-cache-dir "spacy>=3.7,<4" && \
     python -m spacy download en_core_web_sm --quiet
 
 # copy requirements first for caching

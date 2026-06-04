@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const BASE = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/+$/, "");
+const api = (path) => `${BASE}${path.startsWith("/") ? path : "/" + path}`;
 
 function StatusDot({ ok }) {
   return (
@@ -201,7 +202,7 @@ function App() {
   const [health, setHealth] = useState(null);
 
   useEffect(() => {
-    fetch(`${API}/health`)
+    fetch(api("/health"))
       .then((r) => r.json())
       .then((d) => setHealth(d))
       .catch(() => setHealth(null));
@@ -213,7 +214,7 @@ function App() {
     setError(null);
     setResult(null);
     try {
-      const r = await fetch(`${API}/extract`, {
+      const r = await fetch(api("/extract"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ body_text: text, run_matching: true }),
